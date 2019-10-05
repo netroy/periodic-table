@@ -1,0 +1,21 @@
+name: GitHub Pages deploy
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: npm install and build
+        run: |
+          npm install
+          npm run build
+      - name: Deploy site to gh-pages branch
+        uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
+        with:
+          site-directory: dist
+          repo-token: ${{ secrets.DEPLOYMENT_TOKEN }}
